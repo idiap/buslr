@@ -1,0 +1,42 @@
+{% set name = "pyworld" %}
+{% set version = "0.2.8" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "b25bc84efb1bfe1fa0e10b19b391ef40b6e1a330a8e31d676befa58614880bb3"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - cython >=0.24.0
+    - numpy
+    - pip
+    - python
+  run:
+    - cython >=0.24.0
+    - numpy
+    - python
+
+test:
+  imports:
+    - pyworld
+
+about:
+  home: "https://github.com/JeremyCCHsu/Python-Wrapper-for-World-Vocoder"
+  license: "UNKNOWN"
+  license_family: "OTHER"
+  license_file: ""
+  summary: "['PyWorld is a Python wrapper for WORLD vocoder.', '', 'PyWorld wrappers WORLD, which is a free software for high-quality speech', 'analysis, manipulation and synthesis. It can estimate fundamental frequency (F0),', 'aperiodicity and spectral envelope and also generate the speech like input speech', 'with only estimated parameters.', '']"
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - pgarner

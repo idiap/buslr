@@ -1,0 +1,40 @@
+{% set name = "HTS" %}
+{% set version = "2.3" %}
+{% set htk_version = "3.4.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  - url: HTK-{{ htk_version }}.tar.gz
+    folder: htk
+  - url: HDecode-{{ htk_version }}.tar.gz
+    folder: htk
+  - url: http://hts.sp.nitech.ac.jp/archives/{{ version }}/HTS-{{ version }}_for_HTK-{{ htk_version }}.tar.bz2
+    folder: hts
+
+build:
+  number: 0
+  include_recipe: False
+
+requirements:
+  build:
+    - {{ compiler ('c') }}
+
+
+about:
+  home: http://hts.sp.nitech.ac.jp/
+  license: Modified BSD
+  license_file: htk/LICENSE
+  summary: "HMM/DNN-based Speech Synthesis System"
+  description: |
+    The HMM/DNN-based Speech Synthesis System (HTS) has been developed by
+    the HTS working group and others (see Who we are and Acknowledgments).
+    The training part of HTS has been implemented as a modified version of
+    HTK and released as a form of patch code to HTK.
+  dev_url: http://hts.sp.nitech.ac.jp/
+
+extra:
+  recipe-maintainers:
+    - pgarner

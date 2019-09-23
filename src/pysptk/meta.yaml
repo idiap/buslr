@@ -1,0 +1,47 @@
+{% set name = "pysptk" %}
+{% set version = "0.1.17" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "aa8bd2ae84bfe72e9015ccb69eb3b687bc64fad6139ae0b327fe07918e1e28ff"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - decorator
+    - pip
+    - python
+    - scipy
+    - six
+  run:
+    - decorator
+    - python
+    - scipy
+    - six
+
+test:
+  imports:
+    - pysptk
+  requires:
+    - coverage
+    - nose
+
+about:
+  home: "https://github.com/r9y9/pysptk"
+  license: "MIT"
+  license_family: "MIT"
+  license_file: ""
+  summary: "A python wrapper for Speech Signal Processing Toolkit (SPTK)"
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - pgarner

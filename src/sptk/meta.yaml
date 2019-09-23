@@ -1,0 +1,36 @@
+{% set name = "SPTK" %}
+{% set version = "3.11" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: http://downloads.sourceforge.net/sp-tk/{{ name }}-{{ version }}.tar.gz
+  md5: 6e2edc0e81abdc17938571ae4ea66c54
+
+build:
+  number: 0
+  include_recipe: False
+
+requirements:
+  build:
+    - {{ compiler ('c') }}
+
+
+about:
+  home: http://sp-tk.sourceforge.net/
+  license: Modified BSD
+  license_file: COPYING
+  summary: "Speech Signal Processing Toolkit"
+  description: |
+    The Speech Signal Processing Toolkit (SPTK) is a suite of speech
+    signal processing tools for UNIX environments, e.g., LPC analysis,
+    PARCOR analysis, LSP analysis, PARCOR synthesis filter, LSP synthesis
+    filter, vector quantization techniques, and other extended versions of them.
+  dev_url: http://sp-tk.sourceforge.net/
+
+extra:
+  recipe-maintainers:
+    - pgarner

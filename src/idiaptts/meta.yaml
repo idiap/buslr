@@ -1,0 +1,54 @@
+{% set name = "idiaptts" %}
+{% set version = "0.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/idiap/IdiapTTS
+#  git_rev: {{ version }}
+
+build:
+  noarch: python
+  number: 0
+  include_recipe: False
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - wheel
+    - asn1crypto
+    - setuptools
+    - pydub
+    - scipy
+    - pyworld
+    - matplotlib
+    - tensorflow
+    - numpy
+    - soundfile
+    - bandmat
+    - pysptk
+    - nnmnkwii
+
+#test:
+#  imports:
+#    - idiaptts
+
+about:
+  home: https://gitlab.idiap.ch/bschnell/idiaptts
+  license: MIT
+  license_file: LICENSE
+  summary: "Idiap TTS tools"
+  description: |
+    An almost purely Python-based modular toolbox for building Deep
+    Neural Network models (using PyTorch) for statistical parametric speech
+    synthesis.
+  dev_url: https://gitlab.idiap.ch/bschnell/idiaptts
+
+extra:
+  recipe-maintainers:
+    - pgarner

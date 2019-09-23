@@ -1,0 +1,25 @@
+#!/bin/zsh
+#
+# Copyright 2018 by Idiap Research Institute, http://www.idiap.ch
+#
+# See the file COPYING for the licence associated with this software.
+#
+# Author(s):
+#   Phil Garner, December 2018
+#
+# This script is not necessary - you can just run `cmake ..` - but it's
+# sometimes useful to get rid of the cached files or override something on the
+# command line.  Note that CMAKE_BUILD_TYPE doesn't do anything as nothing is
+# built within this cmake invocation.  Rather, it can be passed on to external
+# projects if required.
+#
+
+# Caches break everything
+rm -rf CMakeCache.txt CMakeFiles cmake_install.cmake
+
+# Set options using an array as it's neater
+opts=(
+    -D CMAKE_INSTALL_PREFIX=$PWD
+    -D CMAKE_BUILD_TYPE=relwithdebinfo
+)
+cmake $opts ..

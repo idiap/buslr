@@ -1,0 +1,49 @@
+{% set name = "festvox" %}
+{% set version = "2.8" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  - git_url: https://github.com/festvox/speech_tools
+    folder: speech_tools
+  - git_url: https://github.com/festvox/festival
+    folder: festival
+  - git_url: https://github.com/festvox/festvox
+    folder: festvox
+  - url: http://www.festvox.org/packed/festival/2.5/voices/festvox_kallpc16k.tar.gz
+    folder: kallpc
+  - url: http://www.festvox.org/packed/festival/2.5/festlex_CMU.tar.gz
+    folder: cmu
+  - url: http://www.festvox.org/packed/festival/2.5/festlex_POSLEX.tar.gz
+    folder: poslex
+
+build:
+  number: 0
+  include_recipe: False
+
+requirements:
+  build:
+#
+# This causes conda to use a full path to gcc; that in turn messes up
+# config/compilers/gcc.mak which expects just the name
+#
+#    - {{ compiler ('c') }}
+#    - {{ compiler ('cxx') }}
+
+
+about:
+  home: http://festvox.org/
+  license: MIT style
+  license_file: festvox/COPYING
+  summary: ""
+  description: |
+    The Festvox project aims to make the building of new synthetic voices more
+    systemic and better documented, making it possible for anyone to build a
+    new voice. 
+  dev_url: https://github.com/festvox
+
+extra:
+  recipe-maintainers:
+    - pgarner

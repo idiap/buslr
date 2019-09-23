@@ -1,0 +1,69 @@
+{% set name = "nnmnkwii" %}
+{% set version = "0.0.19" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "7d2599645225500d76e92a77123db94c8b3a7b5c2fba8a85222779ec9d4dce16"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - bandmat >=0.7
+    - cython >=0.28.0
+    - fastdtw
+    - pip
+    - pysptk >=0.1.17
+    - python
+    - scipy
+    - sklearn
+    - tqdm
+  run:
+    - bandmat >=0.7
+    - cython >=0.28.0
+    - fastdtw
+    - pysptk >=0.1.17
+    - python
+    - scipy
+    - sklearn
+    - tqdm
+
+# test:
+#   imports:
+#     - nnmnkwii
+#     - nnmnkwii.autograd
+#     - nnmnkwii.autograd._impl
+#     - nnmnkwii.baseline
+#     - nnmnkwii.datasets
+#     - nnmnkwii.display
+#     - nnmnkwii.frontend
+#     - nnmnkwii.functions
+#     - nnmnkwii.io
+#     - nnmnkwii.metrics
+#     - nnmnkwii.paramgen
+#     - nnmnkwii.postfilters
+#     - nnmnkwii.preprocessing
+#     - nnmnkwii.util
+#     - tests
+#   requires:
+#     - coverage
+#     - nose
+
+about:
+  home: "https://github.com/r9y9/nnmnkwii"
+  license: "MIT"
+  license_family: "MIT"
+  license_file: ""
+  summary: "Library to build speech synthesis systems designed for easy and fast prototyping."
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - pgarner

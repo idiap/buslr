@@ -1,0 +1,33 @@
+--- src/makefile.org	2018-12-29 23:18:18.171600488 +0100
++++ src/makefile	2018-12-29 23:19:51.240940988 +0100
+@@ -6,7 +6,7 @@
+ ### Set the installation prefix directory to the default.  (If
+ ### relative paths are used, the are relative to two directories below
+ ### 'src'.)
+-PREFIX=`cd ../..; pwd`
++# PREFIX=`cd ../..; pwd`
+ 
+ all clean distclean install:
+ 	(cd asclite; $(MAKE) $@)
+--- src/asclite/makefile.org	2018-12-29 23:18:29.674852337 +0100
++++ src/asclite/makefile	2018-12-29 23:25:11.525359332 +0100
+@@ -6,7 +6,7 @@
+ ### Set the installation prefix directory to the default.  (If
+ ### relative paths are used, the are relative to two directories below
+ ### 'src'.)
+-PREFIX=`cd ../../..; pwd`
++# PREFIX=`cd ../../..; pwd`
+ 
+ all clean distclean:
+ 	(cd core; $(MAKE) $@)
+--- src/sclite/makefile.in.org	2019-08-09 11:45:14.054470522 +0200
++++ src/sclite/makefile.in	2019-08-09 11:45:37.938210899 +0200
+@@ -172,7 +172,7 @@
+ 	   if test ! -d $$p ; then \
+ 		echo "Error: directory $$p doesn't exist"; \
+ 	   fi ; \
+-#REenable this later
++#REenable this later \
+ #	   if test ! -w $$p ; then \
+ #		echo "Error: directory $$p is not writeable by you"; \
+ #	   fi \

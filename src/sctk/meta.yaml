@@ -1,0 +1,35 @@
+{% set name = "sctk" %}
+{% set version = "2.4.10" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}-20151007-1312Z.tar.bz2
+  url: http://www.openslr.org/resources/4/{{ name }}-{{ version }}-20151007-1312Z.tar.bz2
+  md5: dd01ad49a33486a4754655d06177f646
+  patches:
+    - patch.txt
+
+build:
+  number: 0
+  include_recipe: False
+
+requirements:
+  build:
+#    - {{ compiler ('c') }}
+#    - {{ compiler ('c++') }}
+
+about:
+  home: https://www.nist.gov/itl/iad/mig/tools
+  license: NIST
+  license_file: DISCLAIMER
+  summary: "NIST scoring tools"
+  description: |
+    ASR scoring tool supplied by NIST
+  dev_url: https://github.com/usnistgov/SCTK
+
+extra:
+  recipe-maintainers:
+    - pgarner

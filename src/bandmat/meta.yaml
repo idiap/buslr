@@ -1,0 +1,42 @@
+{% set name = "bandmat" %}
+{% set version = "0.7" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "f9aa42d8d04d8a04ed839a4b7585451babedcf41bf355936098d49e236f1f05b"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - numpy >=1.6.1
+    - pip
+    - python
+    - scipy >=0.9.0
+  run:
+    - numpy >=1.6.1
+    - python
+    - scipy >=0.9.0
+
+test:
+  imports:
+    - bandmat
+
+about:
+  home: "http://github.com/MattShannon/bandmat"
+  license: "3-clause BSD (see file)"
+  license_family: "BSD"
+  license_file: ""
+  summary: "A banded matrix library for python."
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - pgarner

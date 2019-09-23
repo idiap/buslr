@@ -1,0 +1,38 @@
+{% set name = "pydub" %}
+{% set version = "0.23.1" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "c362fa02da1eebd1d08bd47aa9b0102582dff7ca2269dbe9e043d228a0c1ea93"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pydub
+
+about:
+  home: "http://pydub.com"
+  license: "MIT"
+  license_family: "MIT"
+  license_file: ""
+  summary: "Manipulate audio with an simple and easy high level interface"
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - pgarner
