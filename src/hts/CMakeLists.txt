@@ -13,20 +13,24 @@ set(HTS_STRING "HTS-${HTS_VERSION}_for_HTK-${HTK_VERSION}")
 set(CONFARGS
   --prefix=${CMAKE_INSTALL_PREFIX}
   --enable-hdecode
+  --disable-hslab
   )
 
-find_package(X11)
-if (X11_FOUND)
-  list(APPEND CONFARGS
-    --with-x
-    --x-includes=${X11_INCLUDE_DIR}
-    --x-libraries="${X11_LIBRARIES}"
-    )
-else()
-  list(APPEND CONFARGS
-    --without-x
-    )
-endif()
+# This kind of mechanism could be used to add --disable-hslab, but it just
+# doesn't quite work as HTK/HTS is not quite knitted into configure
+#
+#find_package(X11)
+#if (X11_FOUND)
+#  list(APPEND CONFARGS
+#    --with-x
+#    --x-includes=${X11_INCLUDE_DIR}
+#    --x-libraries="${X11_LIBRARIES}"
+#    )
+#else()
+#  list(APPEND CONFARGS
+#    --without-x
+#    )
+#endif()
 
 # To download HTK go through the registration page, download the file, and copy
 # it to `buslr/src/hts`.
