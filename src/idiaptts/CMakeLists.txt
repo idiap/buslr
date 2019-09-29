@@ -16,6 +16,7 @@ ExternalProject_Add(idiaptts
   BUILD_COMMAND     ""
   INSTALL_COMMAND   python -m pip install . --no-deps --ignore-installed -v
   )
+set_target_properties(idiaptts PROPERTIES EXCLUDE_FROM_ALL 1)
 
 ExternalProject_Get_property(idiaptts SOURCE_DIR)
 
@@ -26,6 +27,7 @@ ExternalProject_Add(idiaptts-english
   BUILD_COMMAND     ""
   INSTALL_COMMAND   ${CMAKE_COMMAND} -P ${CMAKE_INSTALL_SCRIPT}
   )
+set_target_properties(idiaptts-english PROPERTIES EXCLUDE_FROM_ALL 1)
 
 ExternalProject_Get_property(idiaptts-english SOURCE_DIR)
 
