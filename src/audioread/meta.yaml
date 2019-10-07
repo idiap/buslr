@@ -1,0 +1,40 @@
+{% set name = "audioread" %}
+{% set version = "2.1.5" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "36c3b118f097c58ba073b7d040c4319eff200756f094295677567e256282d0d7"
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - audioread
+  requires:
+    - pytest
+
+about:
+  home: "https://github.com/sampsyo/audioread"
+  license: "MIT"
+  license_family: "MIT"
+  license_file: ""
+  summary: "multi-library, cross-platform audio decoding"
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - pgarner
