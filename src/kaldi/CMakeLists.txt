@@ -14,6 +14,8 @@ ExternalProject_Add(kaldi
   PATCH_COMMAND     cd tools && ${CMAKE_MAKE_PROGRAM} cub
   CONFIGURE_COMMAND cd src &&
                     ./configure --shared
+		                --mkl-root=${CMAKE_INSTALL_PREFIX}
+		                --mkl-libdir=${CMAKE_INSTALL_PREFIX}/lib
                                 --fst-root=${CMAKE_INSTALL_PREFIX}
                                 --fst-version=1.6.7 &&
                     ${CMAKE_MAKE_PROGRAM} depend
