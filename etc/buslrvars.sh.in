@@ -1,0 +1,5 @@
+# Source this to allow this BuSLR installation to be found
+export BUSLR_ROOT=@CMAKE_INSTALL_PREFIX@
+export MKLROOT=$BUSLR_ROOT
+export PATH=$BUSLR_ROOT/bin:$PATH
+export LD_LIBRARY_PATH=$BUSLR_ROOT/lib:$LD_LIBRARY_PATH

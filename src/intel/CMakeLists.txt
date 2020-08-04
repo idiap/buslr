@@ -12,24 +12,35 @@ set(INTEL       "https://anaconda.org/intel")
 set(MKL_VERSION "2020.2")
 set(MKL_BUILD   "intel_254")
 
-# Raw MKL library
-set(MKL_DIR     "${INTEL}/mkl/${MKL_VERSION}/download/linux-64")
-ExternalProject_Add(mkl
-  URL               ${MKL_DIR}/mkl-${MKL_VERSION}-${MKL_BUILD}.tar.bz2
-  BUILD_IN_SOURCE   true
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND     ""
-  INSTALL_COMMAND   cp -dr lib ${CMAKE_INSTALL_PREFIX}
-  )
-set_target_properties(mkl PROPERTIES EXCLUDE_FROM_ALL 1)
-
 # The MKL headers
 set(MKL_INCLUDE_DIR "${INTEL}/mkl-include/${MKL_VERSION}/download/linux-64")
-ExternalProject_Add(mkl-include
+BuSLR_Add(mkl-include
   URL ${MKL_INCLUDE_DIR}/mkl-include-${MKL_VERSION}-${MKL_BUILD}.tar.bz2
-  BUILD_IN_SOURCE   true
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND     ""
+  URL_MD5           6870b1f2f7f428f88f0abd7af56a2a66
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     true
   INSTALL_COMMAND   cp -dr include ${CMAKE_INSTALL_PREFIX}
   )
-set_target_properties(mkl-include PROPERTIES EXCLUDE_FROM_ALL 1)
+
+# OpenMP: FindBLAS will not work without this
+set(OPENMP_DIR "${INTEL}/intel-openmp/${MKL_VERSION}/download/linux-64")
+BuSLR_Add(intel-openmp
+  URL ${OPENMP_DIR}/intel-openmp-${MKL_VERSION}-${MKL_BUILD}.tar.bz2
+  URL_MD5           bcf8241c035ba3adc7dbcbde695a865e
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     true
+  INSTALL_COMMAND   cp -dr lib ${CMAKE_INSTALL_PREFIX}
+  )
+
+# Raw MKL library
+set(MKL_DIR     "${INTEL}/mkl/${MKL_VERSION}/download/linux-64")
+BuSLR_Add(mkl
+  URL               ${MKL_DIR}/mkl-${MKL_VERSION}-${MKL_BUILD}.tar.bz2
+  URL_MD5           0ff92a9a6890377f8dc6fe45988a8d26
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     true
+  INSTALL_COMMAND   cp -dr lib ${CMAKE_INSTALL_PREFIX}
+  )
+
+# MKL is actually not useful without headers and OpenMP
+ExternalProject_Add_StepDependencies(mkl build mkl-include intel-openmp)

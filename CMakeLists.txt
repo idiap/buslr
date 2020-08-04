@@ -16,6 +16,21 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     CACHE PATH "..." FORCE)
 endif()
 
+# Add the install prefix to the paths so deps can be found
+set(ENV{MKLROOT} ${CMAKE_INSTALL_PREFIX})
+set(ENV{PATH} "${CMAKE_INSTALL_PREFIX}/bin:$ENV{PATH}")
+set(ENV{LD_LIBRARY_PATH} "${CMAKE_INSTALL_PREFIX}/lib:$ENV{LD_LIBRARY_PATH}")
+message(STATUS "PATH set to $ENV{PATH}")
+
+# Wrapper macro for the generic build; adds defaults
+function(BuSLR_Add)
+  ExternalProject_Add(${ARGV}
+    DOWNLOAD_DIR      "${CMAKE_SOURCE_DIR}/cache"
+    BUILD_IN_SOURCE   TRUE
+    EXCLUDE_FROM_ALL  TRUE
+    )
+endfunction()
+
 # Add each directory in the src directory
 file(GLOB dirs ${CMAKE_CURRENT_SOURCE_DIR}/src/*)
 foreach(dir ${dirs})
@@ -23,3 +38,9 @@ foreach(dir ${dirs})
     add_subdirectory(${dir})
   endif()
 endforeach(dir)
+
+# Helper script
+configure_file(
+  etc/buslrvars.sh.in ${CMAKE_CURRENT_BINARY_DIR}/etc/buslrvars.sh
+  @ONLY
+  )
