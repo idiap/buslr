@@ -29,6 +29,7 @@ function(BuSLR_Add)
     # Empty target
     message(STATUS "Inhibited ${ARGV0}")
     ExternalProject_Add(${ARGV0}
+      DOWNLOAD_COMMAND  true
       CONFIGURE_COMMAND true
       BUILD_COMMAND     true
       INSTALL_COMMAND   true
