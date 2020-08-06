@@ -21,5 +21,6 @@ rm -rf CMakeCache.txt CMakeFiles cmake_install.cmake
 opts=(
     -D CMAKE_INSTALL_PREFIX=$PWD
     -D CMAKE_BUILD_TYPE=relwithdebinfo
+#    -D INHIBIT="mkl;intel-openmp;mkl-include"
 )
 cmake $opts ..

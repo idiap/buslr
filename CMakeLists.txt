@@ -20,16 +20,28 @@ endif()
 set(ENV{MKLROOT} ${CMAKE_INSTALL_PREFIX})
 set(ENV{PATH} "${CMAKE_INSTALL_PREFIX}/bin:$ENV{PATH}")
 set(ENV{LD_LIBRARY_PATH} "${CMAKE_INSTALL_PREFIX}/lib:$ENV{LD_LIBRARY_PATH}")
-message(STATUS "PATH set to $ENV{PATH}")
 
 # Wrapper macro for the generic build; adds defaults
+# You can say -D INHIBIT="foo;bar" to inhibit the targets foo and bar
 set(DOWNLOAD_DIR "${CMAKE_SOURCE_DIR}/cache")
 function(BuSLR_Add)
-  ExternalProject_Add(${ARGV}
-    DOWNLOAD_DIR      ${DOWNLOAD_DIR}
-    BUILD_IN_SOURCE   TRUE
-    EXCLUDE_FROM_ALL  TRUE
-    )
+  if(${ARGV0} IN_LIST INHIBIT)
+    # Empty target
+    message(STATUS "Inhibited ${ARGV0}")
+    ExternalProject_Add(${ARGV0}
+      CONFIGURE_COMMAND true
+      BUILD_COMMAND     true
+      INSTALL_COMMAND   true
+      EXCLUDE_FROM_ALL  TRUE
+      )
+  else()
+    # Real target
+    ExternalProject_Add(${ARGV}
+      DOWNLOAD_DIR      ${DOWNLOAD_DIR}
+      BUILD_IN_SOURCE   TRUE
+      EXCLUDE_FROM_ALL  TRUE
+      )
+  endif()
 endfunction()
 
 # Add each directory in the src directory
