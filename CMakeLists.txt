@@ -23,9 +23,10 @@ set(ENV{LD_LIBRARY_PATH} "${CMAKE_INSTALL_PREFIX}/lib:$ENV{LD_LIBRARY_PATH}")
 message(STATUS "PATH set to $ENV{PATH}")
 
 # Wrapper macro for the generic build; adds defaults
+set(DOWNLOAD_DIR "${CMAKE_SOURCE_DIR}/cache")
 function(BuSLR_Add)
   ExternalProject_Add(${ARGV}
-    DOWNLOAD_DIR      "${CMAKE_SOURCE_DIR}/cache"
+    DOWNLOAD_DIR      ${DOWNLOAD_DIR}
     BUILD_IN_SOURCE   TRUE
     EXCLUDE_FROM_ALL  TRUE
     )
