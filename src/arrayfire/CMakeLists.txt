@@ -16,13 +16,25 @@ set(AF_TGZ "arrayfire-full-${AF_VERSION}.tar.bz2")
 BuSLR_Add(arrayfire
   URL               "${AF_DIR}/${AF_TGZ}"
   URL_MD5           cb01959ac50217a7151dc135f177b444
-  CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+  CMAKE_ARGS        -Wno-dev
+                    -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
                     -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                     -D AF_BUILD_CPU=ON
-                    -D AF_BUILD_CUDA=OFF
+                    -D AF_BUILD_CUDA=ON
                     -D AF_BUILD_OPENCL=OFF
-                    -D AF_WITH_CUDNN=OFF
+                    -D AF_WITH_CUDNN=ON
 		    -D USE_CPU_MKL=ON
+		    -D USE_OPENCL_MKL=ON
+		    -D AF_BUILD_EXAMPLES=OFF
+		    -D AF_BUILD_DOCS=OFF
+#		    -D CUDA_HOST_COMPILER=/usr/bin/gcc-9
+#		    -D CUDA_architecture_build_targets=5.2;5.3;6.0;6.1;6.2;7.2
 )
 
 ExternalProject_Add_StepDependencies(arrayfire build mkl boost)
+
+# Build targets (-D CUDA_architecture_build_targets=...)
+# Arch uses these;
+#  5.2;5.3;6.0;6.1;6.2;7.0;7.2;7.5;8.0
+# ArrayFire defaults to these:
+#  3.0;3.5;5.0;5.2;6.0;6.1;7.0;7.0+PTX
