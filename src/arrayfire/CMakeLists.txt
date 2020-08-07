@@ -31,10 +31,22 @@ BuSLR_Add(arrayfire
 #		    -D CUDA_architecture_build_targets=5.2;5.3;6.0;6.1;6.2;7.2
 )
 
-ExternalProject_Add_StepDependencies(arrayfire build mkl boost)
+ExternalProject_Add_StepDependencies(arrayfire build mkl boost cuda cudnn)
 
 # Build targets (-D CUDA_architecture_build_targets=...)
 # Arch uses these;
 #  5.2;5.3;6.0;6.1;6.2;7.0;7.2;7.5;8.0
 # ArrayFire defaults to these:
 #  3.0;3.5;5.0;5.2;6.0;6.1;7.0;7.0+PTX
+
+# Not tested...
+set(AFBIN_DIR "https://arrayfire.s3.amazonaws.com/${AF_VERSION}")
+set(AFBIN_TGZ "ArrayFire-v${AF_VERSION}_Linux_x86_64.sh")
+BuSLR_Add(arrayfire-bin
+  URL               "${AFBIN_DIR}/${AFBIN_TGZ}"
+  URL_MD5
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     true
+  INSTALL_COMMAND   sh ${AFBIN_TGZ} --prefix=${CMAKE_INSTALL_PREFIX}
+                                    --skip-license
+)

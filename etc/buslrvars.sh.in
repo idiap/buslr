@@ -6,3 +6,7 @@ if [ "$MKLROOT" = "" ]
 then
     export MKLROOT=$BUSLR_ROOT
 fi
+if [ -d $BUSLR_ROOT/opt/cuda ]
+then
+    PATH=$BUSLR_ROOT/opt/cuda/bin:$PATH
+fi
