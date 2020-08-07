@@ -41,4 +41,18 @@ BuSLR_Add(cudnn
   BUILD_COMMAND     true
   INSTALL_COMMAND   cp -dr lib include ${CMAKE_INSTALL_PREFIX}
   )
-ExternalProject_Add_StepDependencies(cudnn build cuda)
+
+# NCCL: Use a github archive
+set(NCCL_VERSION "2.7.8-1")
+set(NCCL_DIR "https://github.com/NVIDIA/nccl/archive")
+set(NCCL_TGZ "v${NCCL_VERSION}.tar.gz")
+find_package(CUDA)
+BuSLR_Add(nccl
+  URL ${NCCL_DIR}/${NCCL_TGZ}
+  URL_MD5
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     ${CMAKE_MAKE_PROGRAM} src.build
+                                          CUDA_HOME=${CUDA_TOOLKIT_ROOT_DIR}
+  INSTALL_COMMAND   cp -dr build/lib build/include ${CMAKE_INSTALL_PREFIX}
+)
+ExternalProject_Add_StepDependencies(nccl build cuda)
