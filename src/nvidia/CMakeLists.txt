@@ -24,10 +24,9 @@ BuSLR_Add(cuda
   DOWNLOAD_NO_EXTRACT TRUE
   CONFIGURE_COMMAND sh <DOWNLOADED_FILE> --target <SOURCE_DIR> --noexec
   BUILD_COMMAND     true
-  INSTALL_COMMAND   ln -sf lib ${CMAKE_INSTALL_PREFIX}/lib64
-                    && ./cuda-installer.pl --silent
-                    --toolkit --toolkitpath=${CMAKE_INSTALL_PREFIX}
-		    --no-opengl-libs --no-man-page  --no-drm
+  INSTALL_COMMAND   ./cuda-installer.pl --silent
+                    --toolkit --toolkitpath=${CMAKE_INSTALL_PREFIX}/opt/cuda
+		    --no-man-page  --no-drm
   )
 
 # CUDNN binaries.  Lift from NVidia's conda dist is easiest
