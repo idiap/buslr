@@ -13,8 +13,9 @@
 # There are packages like this:
 # https://git.archlinux.org/svntogit/packages.git/tree/trunk?h=packages/festival
 # that try to pick apart the right parts of festival.  For the moment, I can't
-# be bothered.  Rather, the festival family has a build-in-source model; just
-# copy everything into /opt
+# be bothered.  Rather, the festival family has a build-in-source model; we do
+# an "in place" build by setting SOURCE_DIR to something reasonable and
+# skipping the install step.
 #
 # This build process is based on http://festvox.org/do_install
 #
@@ -25,38 +26,26 @@ set(CMAKE_INSTALL_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/cmake_install.cmake)
 set(FESTVOX "http://www.festvox.org")
 set(FESTPACK "${FESTVOX}/packed/festival/2.5")
 
-ExternalProject_Add(speech_tools
+BuSLR_Add(speech_tools
   GIT_REPOSITORY    https://github.com/festvox/speech_tools
-  PREFIX            festvox-prefix
-  BUILD_IN_SOURCE   true
-  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/opt
-  INSTALL_COMMAND
-    rm -rf ${CMAKE_INSTALL_PREFIX}/opt/speech_tools &&
-    cp -Lr ../speech_tools ${CMAKE_INSTALL_PREFIX}/opt
+  SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/speech_tools
+  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/speech_tools
+  INSTALL_COMMAND   true
   )
-set_target_properties(speech_tools PROPERTIES EXCLUDE_FROM_ALL 1)
 
-ExternalProject_Add(festival
+BuSLR_Add(festival
   GIT_REPOSITORY    https://github.com/festvox/festival
-  PREFIX            festvox-prefix
-  BUILD_IN_SOURCE   true
-  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/opt
-  INSTALL_COMMAND
-    rm -rf ${CMAKE_INSTALL_PREFIX}/opt/festival &&
-    cp -Lr ../festival ${CMAKE_INSTALL_PREFIX}/opt
+  SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/festival
+  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/festival
+  INSTALL_COMMAND   true
   )
-set_target_properties(festival PROPERTIES EXCLUDE_FROM_ALL 1)
 
-ExternalProject_Add(festvox
+BuSLR_Add(festvox
   GIT_REPOSITORY    https://github.com/festvox/festvox
-  PREFIX            festvox-prefix
-  BUILD_IN_SOURCE   true
-  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/opt
-  INSTALL_COMMAND
-    rm -rf ${CMAKE_INSTALL_PREFIX}/opt/festvox &&
-    cp -Lr ../festvox ${CMAKE_INSTALL_PREFIX}/opt
+  SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/festvox
+  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/festvox
+  INSTALL_COMMAND   true
   )
-set_target_properties(festvox PROPERTIES EXCLUDE_FROM_ALL 1)
 
 ExternalProject_Add_StepDependencies(festival build speech_tools)
 ExternalProject_Add_StepDependencies(festvox build speech_tools festival)
@@ -65,19 +54,19 @@ ExternalProject_Add_StepDependencies(festvox build speech_tools festival)
 # Festival data.  One project per data file.
 # Make sure to install after festival but before festvox.
 #
+# The caching won't work for these as written.  todo...
+#
 set(DICTS
   festlex_CMU
   festlex_POSLEX
   )
 foreach(DICT ${DICTS})
-  ExternalProject_Add(${DICT}
+  BuSLR_Add(${DICT}
     URL               ${FESTPACK}/${DICT}.tar.gz
-    BUILD_IN_SOURCE   true
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND     ""
-    INSTALL_COMMAND   cp -Lr . ${CMAKE_INSTALL_PREFIX}/opt/festival
+    CONFIGURE_COMMAND true
+    BUILD_COMMAND     true
+    INSTALL_COMMAND   cp -Lr . ${CMAKE_INSTALL_PREFIX}/festival
     )
-  set_target_properties(${DICT} PROPERTIES EXCLUDE_FROM_ALL 1)
   ExternalProject_Add_StepDependencies(${DICT} install festival)
   ExternalProject_Add_StepDependencies(festvox install ${DICT})
 endforeach()
