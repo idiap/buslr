@@ -17,7 +17,10 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 # Add the install prefix to the paths so deps can be found
-set(ENV{MKLROOT} ${CMAKE_INSTALL_PREFIX})
+if(NOT DEFINED ENV{MKLROOT})
+  message(STATUS "Setting MKLROOT")
+  set(ENV{MKLROOT} ${CMAKE_INSTALL_PREFIX})
+endif()
 set(ENV{PATH} "${CMAKE_INSTALL_PREFIX}/bin:$ENV{PATH}")
 set(ENV{LD_LIBRARY_PATH} "${CMAKE_INSTALL_PREFIX}/lib:$ENV{LD_LIBRARY_PATH}")
 
