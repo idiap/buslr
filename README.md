@@ -1,9 +1,8 @@
-# Build system for Speech and Language Research
+# Build System for Learning Research
 
 ## Overview
 
-BuSLR knows about various packages that are useful for speech and language
-processing, and how to go get them and build them.  BuSLR supports two build
+BuSLR knows about various packages that are useful for machine learning (originally speech and language processing), and how to go get them and build them.  BuSLR supports two build
 systems:
 
  - One is built around [cmake](https://cmake.org)'s
@@ -20,7 +19,7 @@ something is normally in a linux distribution (e.g.,
 [sox](http://sox.sourceforge.net)) then there's no point handling it here.  If
 it's in `conda` then the same argument applies, but more subjectively.
 [pytorch](https://pytorch.org) is better in conda,
-[kaldi](http://kaldi-asr.org) perhaps not (although I'm on this one).
+[kaldi](http://kaldi-asr.org) perhaps not.
 
 Also, with conda, bear in mind that [this](https://xkcd.com/1987/) is not a
 joke; the thing marked "another PIP?" does exist.
@@ -30,15 +29,16 @@ joke; the thing marked "another PIP?" does exist.
 Clone the repo and do
 ```
 cd buslr/local
-./Configure.sh
+cp Configure.example configure.sh # Edit if necessary
+./configure.sh
 make <package name>
 ```
 The package is built in `local` and installed to `local` unless the appropriate
-line in `Configure.sh` is changed.  You can set:
+line in `configure.sh` is changed.  You can set:
 ```
 export PATH=<path-to-buslr>/local/bin
 ```
-to access the builds.
+to access the builds, or do `source <path-to-buslr>/local/etc/buslrvars.sh` to set other appropriate variables too.  Set the `INHIBIT` line in `configure.sh` to inhibit building of packages for which you might have a system version (typically `cuda` or `mkl`).
 
 ## To use conda
 
@@ -66,8 +66,7 @@ with muliple PIPs and conda being unaware of PIP.
 * [HTS](src/hts/README) requires the HTK sources to be downloaded manually.
 * SRILM also requires a manual download
 * Some packages (festival, kaldi, SRILM) don't really support a `make install`.
-  I'm not yet sure if and how to handle this, but see the cmake install section
-  below.
+  See the in-place build section below.
 
 ## Guidelines for creating new packages
 
@@ -121,4 +120,6 @@ INSTALL_COMMAND   ${CMAKE_COMMAND} -P ${CMAKE_INSTALL_SCRIPT}
 ```
 and specify the files using `install(FILES <files> DESTINATION <where>)`.
 
+### In-place builds
 
+Some packages, notably `kaldi` and the `festvox` family, don't really support being installed.  For these, we set `SOURCE_DIR` to something at top level (rather than buried in the `src` tree) and set `INSTALL_COMMAND true` to suppress installation.  `true` here is the unix command that returns 1; empty strings don't survive the `BuSLR_Add` wrapper.
