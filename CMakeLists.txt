@@ -18,11 +18,17 @@ endif()
 
 # Add the install prefix to the paths so deps can be found
 if(NOT DEFINED ENV{MKLROOT})
-  message(STATUS "Setting MKLROOT")
   set(ENV{MKLROOT} ${CMAKE_INSTALL_PREFIX})
 endif()
 set(ENV{PATH} "${CMAKE_INSTALL_PREFIX}/bin:$ENV{PATH}")
 set(ENV{LD_LIBRARY_PATH} "${CMAKE_INSTALL_PREFIX}/lib:$ENV{LD_LIBRARY_PATH}")
+
+# We often need to call make; do it recursively if the generator is make too
+if("${CMAKE_GENERATOR}" MATCHES "Make")
+  set(MAKE_EXE "$(MAKE)")
+else()
+  find_program(MAKE_EXE NAMES gmake nmake make)
+endif()
 
 # Wrapper macro for the generic build; adds defaults
 # You can say -D INHIBIT="foo;bar" to inhibit the targets foo and bar

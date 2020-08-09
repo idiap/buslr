@@ -14,16 +14,16 @@ BuSLR_Add(kaldi
   GIT_REPOSITORY    https://github.com/kaldi-asr/kaldi
   GIT_TAG           794732ac31426d6bfd39b27c66ef7bdcfcd80a79
   SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/kaldi
-  PATCH_COMMAND     cd tools && ${CMAKE_MAKE_PROGRAM} cub
+  PATCH_COMMAND     cd tools && ${MAKE_EXE} cub
   CONFIGURE_COMMAND cd src &&
                     ./configure --shared
 		                --cudatk-dir=${CUDA_TOOLKIT_ROOT_DIR}
 		                --mkl-root=$ENV{MKLROOT}
-		                --mkl-libdir=$ENV{MKLROOT}/lib/intel64
+		                --mkl-libdir=$ENV{MKLROOT}/lib # Maybe + intel64
                                 --fst-root=${CMAKE_INSTALL_PREFIX}
                                 --fst-version=1.6.7 &&
-                    ${CMAKE_MAKE_PROGRAM} depend
-  BUILD_COMMAND     cd src && ${CMAKE_MAKE_PROGRAM}
+                    ${MAKE_EXE} depend
+  BUILD_COMMAND     cd src && ${MAKE_EXE}
   INSTALL_COMMAND   true
   )
 
