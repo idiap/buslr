@@ -7,8 +7,8 @@
 #   Phil Garner, August 2020
 #
 BuSLR_Add(kenlm
-  GIT_REPOSITORY    https://github.com/kpu/kenlm.git
-  GIT_TAG           87e85e66c99ceff1fab2500a7c60c01da7315eec
+  URL               https://kheafield.com/code/kenlm.tar.gz
+  URL_MD5           f7dce7d50387dc3ca21b408b36bd0838
   CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
                     -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 		    -D KENLM_MAX_ORDER=20

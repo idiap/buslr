@@ -48,11 +48,11 @@ set(NCCL_DIR "https://github.com/NVIDIA/nccl/archive")
 set(NCCL_TGZ "v${NCCL_VERSION}.tar.gz")
 find_package(CUDA)
 BuSLR_Add(nccl
-  URL ${NCCL_DIR}/${NCCL_TGZ}
-  URL_MD5
+  URL               ${NCCL_DIR}/${NCCL_TGZ}
+  DOWNLOAD_NAME     "nccl-${NCCL_VERSION}.tar.gz"
+  URL_MD5           2ad66167be386ec506426cede8a90df2
   CONFIGURE_COMMAND true
-  BUILD_COMMAND     ${CMAKE_MAKE_PROGRAM} src.build
-                                          CUDA_HOME=${CUDA_TOOLKIT_ROOT_DIR}
+  BUILD_COMMAND     ${MAKE_EXE} src.build CUDA_HOME=${CUDA_TOOLKIT_ROOT_DIR}
   INSTALL_COMMAND   cp -dr build/lib build/include ${CMAKE_INSTALL_PREFIX}
 )
 ExternalProject_Add_StepDependencies(nccl build cuda)

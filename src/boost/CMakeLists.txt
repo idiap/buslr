@@ -13,6 +13,8 @@ BuSLR_Add(boost
   CONFIGURE_COMMAND true
   BUILD_COMMAND     ./bootstrap.sh
                     --prefix=${CMAKE_INSTALL_PREFIX}
-                    --with-libraries=date_time,filesystem,graph,regex
   INSTALL_COMMAND   ./b2 install
   )
+
+# You can restrict the number of libraries, but tricky to know which ones
+# --with-libraries=date_time,filesystem,graph,regex,thread,program_options,system
