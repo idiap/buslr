@@ -20,7 +20,7 @@ rm -rf CMakeCache.txt CMakeFiles cmake_install.cmake
 # Set options using an array as it's neater
 opts=(
     -D CMAKE_INSTALL_PREFIX=$PWD
-    -D CMAKE_BUILD_TYPE=relwithdebinfo
+    -D CMAKE_BUILD_TYPE=release
 #    -D INHIBIT="mkl;intel-openmp;mkl-include"
 )
 cmake $opts ..

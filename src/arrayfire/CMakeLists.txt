@@ -9,7 +9,9 @@
 
 # This is a good reference:
 # https://github.com/archlinux/svntogit-community/blob/packages/arrayfire/trunk/PKGBUILD
-
+#
+# With CUDA 10.0, we need gcc-7 as host compiler
+# The array 3.0;3.4;... doesn't survive function wrapping; this is a problem!
 set(AF_VERSION 3.7.2)
 set(AF_DIR "http://github.com/arrayfire/arrayfire/releases/download/v${AF_VERSION}")
 set(AF_TGZ "arrayfire-full-${AF_VERSION}.tar.bz2")
@@ -27,8 +29,8 @@ BuSLR_Add(arrayfire
 		    -D USE_OPENCL_MKL=ON
 		    -D AF_BUILD_EXAMPLES=OFF
 		    -D AF_BUILD_DOCS=OFF
-#		    -D CUDA_HOST_COMPILER=/usr/bin/gcc-9
-#		    -D CUDA_architecture_build_targets=5.2;5.3;6.0;6.1;6.2;7.2
+		    -D CUDA_HOST_COMPILER=/usr/bin/gcc-7
+#		    -D CUDA_architecture_build_targets=3.0;3.5;6.0;6.1;7.0;7.2;7.5
 )
 
 ExternalProject_Add_StepDependencies(arrayfire build mkl boost cuda cudnn)
@@ -38,6 +40,8 @@ ExternalProject_Add_StepDependencies(arrayfire build mkl boost cuda cudnn)
 #  5.2;5.3;6.0;6.1;6.2;7.0;7.2;7.5;8.0
 # ArrayFire defaults to these:
 #  3.0;3.5;5.0;5.2;6.0;6.1;7.0;7.0+PTX
+# Idiap has:
+#  3.0;3.5;6.0;6.1;7.0;7.2;7.5
 
 # Not tested...
 set(AFBIN_DIR "https://arrayfire.s3.amazonaws.com/${AF_VERSION}")
