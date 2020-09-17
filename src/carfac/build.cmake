@@ -26,24 +26,27 @@ set_target_properties(carfac
              PUBLIC_HEADER "${HEADERS}"
   )
 
-# Things to install
-set(INSTALL_TARGETS
-  carfac
-)
-
 # CMake install line
 install(
-  TARGETS ${INSTALL_TARGETS}
+  TARGETS carfac
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   PUBLIC_HEADER DESTINATION include/carfac
   )
 
-# These require gtest
-#add_executable(binaural_sai_test binaural_sai_test.cc)
-#target_link_libraries(binaural_sai_test carfac ${GTEST_LIBRARIES})
-#add_executable(carfac_test carfac_test.cc)
-#target_link_libraries(carfac_test carfac ${GTEST_LIBRARIES})
-#add_executable(sai_test sai_test.cc)
-#target_link_libraries(sai_test carfac ${GTEST_LIBRARIES})
+# Testing
+find_package(GTest)
+enable_testing()
+
+add_executable(binaural_sai_test binaural_sai_test.cc)
+target_link_libraries(binaural_sai_test carfac GTest::GTest GTest::Main)
+add_test(binaural_sai binaural_sai_test)
+
+add_executable(carfac_test carfac_test.cc)
+target_link_libraries(carfac_test carfac GTest::GTest GTest::Main)
+add_test(carfac carfac_test)
+
+add_executable(sai_test sai_test.cc)
+target_link_libraries(sai_test carfac GTest::GTest GTest::Main)
+add_test(sai sai_test)

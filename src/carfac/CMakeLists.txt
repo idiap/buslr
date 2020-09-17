@@ -13,6 +13,7 @@ BuSLR_Add(carfac
                        cpp/CMakeLists.txt
   SOURCE_SUBDIR     cpp
   CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+  TEST_AFTER_INSTALL TRUE
 )
 
-# ExternalProject_Add_StepDependencies(carfac build googletest)
+ExternalProject_Add_StepDependencies(carfac build googletest)
