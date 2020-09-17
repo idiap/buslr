@@ -10,6 +10,9 @@ cmake_minimum_required(VERSION 3.9)
 project(BuSLR)
 include(ExternalProject)
 
+# Common requirements
+find_package(Git REQUIRED)
+
 # Default is /usr/local; this overrides it to the current directory
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}"

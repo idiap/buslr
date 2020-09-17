@@ -7,14 +7,12 @@
 #   Phil Garner, December 2018
 #
 
-# Right now, this one has my CMake configuration including something for
-# GoogleTest.  CMake has a GoogleTest package, so this may all be moot.
-find_package(Git REQUIRED)
-ExternalProject_Add(carfac
-  GIT_REPOSITORY    https://github.com/pgarner/carfac
-  GIT_TAG           devel
-  BUILD_IN_SOURCE   true
+BuSLR_Add(carfac
+  GIT_REPOSITORY    https://github.com/google/carfac
+  PATCH_COMMAND     cp ${CMAKE_CURRENT_SOURCE_DIR}/build.cmake
+                       cpp/CMakeLists.txt
   SOURCE_SUBDIR     cpp
-  CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+  CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 )
-set_target_properties(carfac PROPERTIES EXCLUDE_FROM_ALL 1)
+
+# ExternalProject_Add_StepDependencies(carfac build googletest)
