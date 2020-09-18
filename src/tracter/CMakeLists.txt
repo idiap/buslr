@@ -6,11 +6,15 @@
 # Author(s):
 #   Phil Garner, December 2018
 #
-find_package(Git REQUIRED)
-ExternalProject_Add(tracter
+
+BuSLR_Add(tracter
   GIT_REPOSITORY    https://github.com/idiap/tracter
-  BUILD_IN_SOURCE   true
   PATCH_COMMAND     ./prepare.sh
   CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+                    -DCMAKE_C_COMPILER=clang
+                    -DCMAKE_CXX_COMPILER=clang++
 )
-set_target_properties(tracter PROPERTIES EXCLUDE_FROM_ALL 1)
+
+ExternalProject_Add_StepDependencies(tracter build
+  boost lube sptk libresample libssp
+  )
