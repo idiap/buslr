@@ -15,3 +15,6 @@ BuSLR_Add(flashlight
   )
 
 ExternalProject_Add_StepDependencies(flashlight build gloo nccl arrayfire)
+
+# August 2020: flashlight can't find googletest unless you let it download its
+# own copy
