@@ -4,23 +4,23 @@
 # See the file COPYING for the licence associated with this software.
 #
 # Author(s):
-#   Phil Garner, August2020
+#   Phil Garner, August 2020
 #
 
 # https://developer.nvidia.com/cuda-toolkit
-# Here we use 10.0 as it matches Idiap's current drivers
+# Here we use 10.2 as it matches Idiap's current drivers
 # Ref: https://docs.nvidia.com/deploy/cuda-compatibility/index.html
-set(NVIDIA      "https://developer.nvidia.com/compute")
-set(CUDA_VERSION "10.0")
-set(CUDA_SUBVERSION ".130")
-set(CUDA_DRIVER  "410.48")
+set(NVIDIA      "https://developer.download.nvidia.com/compute")
+set(CUDA_VERSION "10.2")
+set(CUDA_SUBVERSION ".89")
+set(CUDA_DRIVER  "440.33.01")
 set(CUDA_FILE    "cuda_${CUDA_VERSION}${CUDA_SUBVERSION}_${CUDA_DRIVER}_linux.run")
 
 # NVidia conda distributions don't contain headers, so we use the original
 # If this fails, download by hand and put into buslr/cache
 BuSLR_Add(cuda
   URL "${NVIDIA}/cuda/${CUDA_VERSION}/Prod/local_installers/${CUDA_FILE}"
-  URL_MD5           9375304c8dc8d42e7f9a9ae37e80b42b
+  URL_MD5           3d816c583759efa8567a92c1a2af90db
   DOWNLOAD_NAME     ${CUDA_FILE}
   DOWNLOAD_NO_EXTRACT TRUE
   CONFIGURE_COMMAND sh <DOWNLOADED_FILE> --target <SOURCE_DIR> --noexec
@@ -32,12 +32,12 @@ BuSLR_Add(cuda
 
 # CUDNN binaries.  Lift from NVidia's conda dist is easiest
 set(NVIDIA_CONDA "https://anaconda.org/nvidia")
-set(CUDNN_VERSION "7.6.0")
-set(CUDNN_BUILD   "cuda10.0_0")
+set(CUDNN_VERSION "8.0.0")
+set(CUDNN_BUILD   "cuda10.2_0")
 set(CUDNN_DIR "${NVIDIA_CONDA}/cudnn/${CUDNN_VERSION}/download/linux-64")
 BuSLR_Add(cudnn
   URL ${CUDNN_DIR}/cudnn-${CUDNN_VERSION}-${CUDNN_BUILD}.tar.bz2
-  URL_MD5           ffd33dfe01265551517291f584d5e062
+  URL_MD5           efd6901a5540f1c73ab0bdc06b9eaa98
   CONFIGURE_COMMAND true
   BUILD_COMMAND     true
   INSTALL_COMMAND   cp -dr lib include ${CMAKE_INSTALL_PREFIX}
