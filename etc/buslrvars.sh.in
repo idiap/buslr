@@ -10,4 +10,5 @@ fi
 if [ -d $BUSLR_ROOT/opt/cuda ]
 then
     PATH=$BUSLR_ROOT/opt/cuda/bin:$PATH
+    LD_LIBRARY_PATH=$BUSLR_ROOT/opt/cuda/lib64:$LD_LIBRARY_PATH
 fi

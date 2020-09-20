@@ -16,6 +16,7 @@ BuSLR_Add(kaldi
   SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/kaldi
   PATCH_COMMAND     cd tools && ${MAKE_EXE} cub
   CONFIGURE_COMMAND cd src &&
+                    CC=gcc-7 CXX=g++-7
                     ./configure --shared
 		                --cudatk-dir=${CUDA_TOOLKIT_ROOT_DIR}
 		                --mkl-root=$ENV{MKLROOT}
