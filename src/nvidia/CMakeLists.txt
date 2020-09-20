@@ -18,16 +18,20 @@ set(CUDA_FILE    "cuda_${CUDA_VERSION}${CUDA_SUBVERSION}_${CUDA_DRIVER}_linux.ru
 
 # NVidia conda distributions don't contain headers, so we use the original
 # If this fails, download by hand and put into buslr/cache
+#
+# It's possible to add --extract=<SOURCE_DIR>, but then the installer has to be
+# run explicitly too
 BuSLR_Add(cuda
   URL "${NVIDIA}/cuda/${CUDA_VERSION}/Prod/local_installers/${CUDA_FILE}"
   URL_MD5           3d816c583759efa8567a92c1a2af90db
   DOWNLOAD_NAME     ${CUDA_FILE}
   DOWNLOAD_NO_EXTRACT TRUE
-  CONFIGURE_COMMAND sh <DOWNLOADED_FILE> --target <SOURCE_DIR> --noexec
+  CONFIGURE_COMMAND true
   BUILD_COMMAND     true
-  INSTALL_COMMAND   ./cuda-installer.pl --silent --override
-                    --toolkit --toolkitpath=${CMAKE_INSTALL_PREFIX}/opt/cuda
-		    --no-man-page  --no-drm
+  INSTALL_COMMAND   mkdir -p ${CMAKE_INSTALL_PREFIX}/opt &&
+                    sh <DOWNLOADED_FILE> --silent --override --toolkit
+			--installpath=${CMAKE_INSTALL_PREFIX}/opt/cuda
+			--no-man-page --no-drm
   )
 
 # CUDNN binaries.  Lift from NVidia's conda dist is easiest
