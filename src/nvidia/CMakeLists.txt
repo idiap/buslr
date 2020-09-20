@@ -57,7 +57,8 @@ BuSLR_Add(nccl
   DOWNLOAD_NAME     "nccl-${NCCL_VERSION}.tar.gz"
   URL_MD5           2ad66167be386ec506426cede8a90df2
   CONFIGURE_COMMAND true
-  BUILD_COMMAND     ${MAKE_EXE} src.build CUDA_HOME=${CUDA_TOOLKIT_ROOT_DIR}
+  BUILD_COMMAND     CC=gcc-7 CXX=g++-7
+                    ${MAKE_EXE} src.build CUDA_HOME=${CUDA_TOOLKIT_ROOT_DIR}
   INSTALL_COMMAND   cp -dr build/lib build/include ${CMAKE_INSTALL_PREFIX}
 )
 ExternalProject_Add_StepDependencies(nccl build cuda)
