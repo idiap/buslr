@@ -9,13 +9,11 @@
 
 # To download SRILM go through the registration page, download the file, and
 # copy it to `buslr/src/srilm`.  The URL below then points to that file.
-set(SRILM ${CMAKE_CURRENT_BINARY_DIR}/srilm-prefix/src/srilm)
-ExternalProject_Add(srilm
-  URL               ${CMAKE_CURRENT_SOURCE_DIR}/srilm-1.7.2.tar.gz
+BuSLR_Add(srilm
+  URL               http://www.speech.sri.com/projects/srilm-1.7.2.tar.gz
   URL_MD5           b8d2be62b128de012d7a732cda679b22
-  BUILD_IN_SOURCE   true
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND     SRILM=${SRILM} ${CMAKE_MAKE_PROGRAM}
-  INSTALL_COMMAND   ""
+  SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/srilm
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     SRILM=<SOURCE_DIR> ${MAKE_EXE}
+  INSTALL_COMMAND   true
   )
-set_target_properties(srilm PROPERTIES EXCLUDE_FROM_ALL 1)
