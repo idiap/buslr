@@ -67,6 +67,6 @@ endforeach(dir)
 
 # Helper script
 configure_file(
-  etc/buslrvars.sh.in ${CMAKE_CURRENT_BINARY_DIR}/etc/buslrvars.sh
+  etc/buslrvars.sh.in ${CMAKE_INSTALL_PREFIX}/etc/buslrvars.sh
   @ONLY
   )
