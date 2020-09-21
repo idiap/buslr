@@ -9,7 +9,9 @@
 
 BuSLR_Add(stk
   GIT_REPOSITORY    https://github.com/stk-developers/stk
-  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX} --without-atlas
+  PATCH_COMMAND     patch -p1 < ${CMAKE_CURRENT_SOURCE_DIR}/patch.txt
+  CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+                                --enable-sse --without-atlas
   BUILD_COMMAND     ${MAKE_EXE}
   INSTALL_COMMAND   ${MAKE_EXE} install
   )
