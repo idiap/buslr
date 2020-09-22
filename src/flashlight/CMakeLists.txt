@@ -10,9 +10,11 @@
 BuSLR_Add(flashlight
   GIT_REPOSITORY    https://github.com/facebookresearch/flashlight.git
   GIT_TAG           aadba79a51cc7d9b8d63a8f16afb14e5ef25590e
+  PATCH_COMMAND     patch -p1 < ${CMAKE_CURRENT_SOURCE_DIR}/patch.txt
   CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
                     -D CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                     -D FLASHLIGHT_BACKEND=CUDA
+		    -D CUDA_HOST_COMPILER=/usr/bin/gcc-7
   )
 
 ExternalProject_Add_StepDependencies(flashlight build gloo nccl arrayfire)

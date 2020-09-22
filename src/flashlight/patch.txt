@@ -1,0 +1,13 @@
+diff --git a/flashlight/autograd/backend/cuda/CudnnUtils.cpp b/flashlight/autograd/backend/cuda/CudnnUtils.cpp
+index d7b259c..ced3323 100644
+--- a/flashlight/autograd/backend/cuda/CudnnUtils.cpp
++++ b/flashlight/autograd/backend/cuda/CudnnUtils.cpp
+@@ -276,7 +276,7 @@ RNNDescriptor::RNNDescriptor(
+   cudnnRNNAlgo_t algo = CUDNN_RNN_ALGO_STANDARD;
+   cudnnDataType_t cudnntype = cudnnMapToType(type);
+ 
+-#if CUDNN_VERSION >= 7000
++#if 0 // CUDNN_VERSION >= 7000
+   CUDNN_CHECK_ERR(cudnnSetRNNDescriptor(
+       handle,
+       descriptor,
