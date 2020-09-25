@@ -1,0 +1,14 @@
+diff --git a/common/tools/cpanp_installhelper/cpanp_installhelper.sh b/common/tools/cpanp_installhelper/cpanp_installhelper.sh
+index 38a77a7e..c14a9ac3 100755
+--- a/common/tools/cpanp_installhelper/cpanp_installhelper.sh
++++ b/common/tools/cpanp_installhelper/cpanp_installhelper.sh
+@@ -35,7 +35,8 @@ if [ "A$installed" == "Apresent" ]; then
+ fi
+ 
+ # Not installed, try to install (we will check exit status of the cpan install command)
+-ntool=`perl -e 'if ($^V ge 5.18.0){print "cpanm"}else{print "cpanp -i"}'`
++# ntool=`perl -e 'if ($^V ge 5.18.0){print "cpanm"}else{print "cpanp -i"}'`
++ntool=cpan
+ tool=`echo $ntool | perl -I$tool_dir/../../lib -ne 'use MMisc; print MMisc::smart_cmd_which($_)'`
+ if [ "A$tool" == "A" ]; then
+     echo "Problem finding needed tool ($ntool), aborting"

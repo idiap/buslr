@@ -13,3 +13,6 @@ then
     LD_LIBRARY_PATH=$BUSLR_ROOT/opt/cuda/lib64:$LD_LIBRARY_PATH
 fi
 export KENLM_ROOT_DIR=$BUSLR_ROOT/kenlm
+
+# Allow local perl modules; see https://metacpan.org/pod/local::lib
+eval "$(perl -I$BUSLR_ROOT/perl5/lib/perl5 -Mlocal::lib=$BUSLR_ROOT/perl5)"
