@@ -29,3 +29,14 @@ BuSLR_Add(kaldi
   )
 
 ExternalProject_Add_StepDependencies(kaldi build sph2pipe sctk openfst mkl cuda)
+
+
+BuSLR_Add(kaldi_lm
+  URL               http://www.danielpovey.com/files/kaldi/kaldi_lm.tar.gz
+  SOURCE_DIR        ${CMAKE_INSTALL_PREFIX}/kaldi/tools/kaldi_lm
+  CONFIGURE_COMMAND true
+  BUILD_COMMAND     ${MAKE_EXE}
+  INSTALL_COMMAND   true
+  )
+
+ExternalProject_Add_StepDependencies(kaldi_lm build kaldi)
